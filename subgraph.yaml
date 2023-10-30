@@ -1,0 +1,39 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Contract
+    network: base
+    source:
+      address: "E3B53AF74a4BF62Ae5511055290838050bf764Df"
+      abi: Contract
+      startBlock: 2127403
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - OwnershipTransferred
+        - Paused
+        - ReceiveFromChain
+        - SendToChain
+        - Transfer
+      abis:
+        - name: Contract
+          file: ./abis/Contract.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Paused(bool)
+          handler: handlePaused
+        - event: ReceiveFromChain(uint16,uint64,uint256)
+          handler: handleReceiveFromChain
+        - event: SendToChain(uint16,bytes,uint256)
+          handler: handleSendToChain
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/contract.ts
